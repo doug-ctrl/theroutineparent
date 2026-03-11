@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} — ModernMuse{% endblock %}
+
+{% block content %}
+<article class="post-detail">
+    <div class="post-meta">
+        {% if post.pillar %}
+        <span class="pillar">{{ post.pillar.name }}</span>
+        {% endif %}
+        · {{ post.publish|date:"M d, Y" }} · {{ post.reading_time }} min read
+    </div>
+    <h1>{{ post.title }}</h1>
+    {% if post.subtitle %}<p class="subtitle">{{ post.subtitle }}</p>{% endif %}
+
+    <div class="post-body">
+        {{ post.body|linebreaks }}
+    </div>
+
+    {% if post.tags.all %}
+    <div class="tags">
+        {% for tag in post.tags.all %}
+        <span class="tag">{{ tag.name }}</span>
+        {% endfor %}
+    </div>
+    {% endif %}
+</article>
+{% endblock %}
