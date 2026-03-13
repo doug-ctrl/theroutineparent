@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}ModernMuse{% endblock %}</title>
+    <title>{% block title %}RoutineParent{% endblock %}</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -155,7 +155,7 @@
 </head>
 <body>
     <nav>
-        <a href="{% url 'blog:post_list' %}" class="logo">The Modern<span>Muse</span></a>
+        <a href="{% url 'blog:post_list' %}" class="logo">The Routine<span>Parent</span></a>
         <ul class="nav-links">
             <li><a href="{% url 'blog:post_list' %}">Home</a></li>
             <li><a href="{% url 'blog:pillar_posts' 'parent-productivity' %}">Productivity</a></li>
@@ -171,7 +171,7 @@
     </div>
 
     <footer>
-        <p>&copy; 2026 ModernMuse — Productivity for Modern Parents</p>
+        <p>&copy; 2026 The Routine Parent — Productivity for Modern Parents</p>
     </footer>
 
     {% block extra_js %}{% endblock %}

@@ -140,7 +140,7 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # Site info
-SITE_NAME = "ModernMuse"
+SITE_NAME = "The Routine Parent"
 SITE_TAGLINE = "Productivity for Modern Parents"
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
