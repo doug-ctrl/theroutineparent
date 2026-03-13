@@ -81,36 +81,6 @@ wheels = [
 ]
 
 [[package]]
-name = "modernmuse"
-version = "0.1.0"
-source = { virtual = "." }
-dependencies = [
-    { name = "django", version = "5.2.12", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.12'" },
-    { name = "django", version = "6.0.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
-    { name = "django-taggit" },
-    { name = "pillow" },
-    { name = "python-dotenv" },
-    { name = "whitenoise" },
-]
-
-[package.dev-dependencies]
-dev = [
-    { name = "pytest-django" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "django", specifier = ">=5.2.12" },
-    { name = "django-taggit", specifier = ">=6.1.0" },
-    { name = "pillow", specifier = ">=12.1.1" },
-    { name = "python-dotenv", specifier = ">=1.2.2" },
-    { name = "whitenoise", specifier = ">=6.12.0" },
-]
-
-[package.metadata.requires-dev]
-dev = [{ name = "pytest-django", specifier = ">=4.12.0" }]
-
-[[package]]
 name = "packaging"
 version = "26.0"
 source = { registry = "https://pypi.org/simple" }
@@ -269,6 +239,36 @@ sdist = { url = "https://files.pythonhosted.org/packages/90/76/437d71068094df072
 wheels = [
     { url = "https://files.pythonhosted.org/packages/49/4b/359f28a903c13438ef59ebeee215fb25da53066db67b305c125f1c6d2a25/sqlparse-0.5.5-py3-none-any.whl", hash = "sha256:12a08b3bf3eec877c519589833aed092e2444e68240a3577e8e26148acc7b1ba", size = 46138, upload-time = "2025-12-19T07:17:46.573Z" },
 ]
+
+[[package]]
+name = "theroutineparent"
+version = "0.1.0"
+source = { virtual = "." }
+dependencies = [
+    { name = "django", version = "5.2.12", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.12'" },
+    { name = "django", version = "6.0.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
+    { name = "django-taggit" },
+    { name = "pillow" },
+    { name = "python-dotenv" },
+    { name = "whitenoise" },
+]
+
+[package.dev-dependencies]
+dev = [
+    { name = "pytest-django" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "django", specifier = ">=5.2.12" },
+    { name = "django-taggit", specifier = ">=6.1.0" },
+    { name = "pillow", specifier = ">=12.1.1" },
+    { name = "python-dotenv", specifier = ">=1.2.2" },
+    { name = "whitenoise", specifier = ">=6.12.0" },
+]
+
+[package.metadata.requires-dev]
+dev = [{ name = "pytest-django", specifier = ">=4.12.0" }]
 
 [[package]]
 name = "tzdata"

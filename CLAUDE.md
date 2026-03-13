@@ -1,4 +1,4 @@
-# ModernMuse — Django Blog
+# The Routine Parent — Django Blog
 
 A productivity and personal growth blog for modern parents.
 
@@ -42,7 +42,7 @@ The blog has 4 content pillars (Pillar model):
 4. Real Life Systems — calendars, chores, family organization
 
 ## Brand Voice
-ModernMuse content should feel: honest, reflective, encouraging,
+The Routine Parent content should feel: honest, reflective, encouraging,
 practical, and relatable. Real-life experiences, not idealized advice.
 Written from the perspective of a parent with two kids (ages 6 and 9).
 
