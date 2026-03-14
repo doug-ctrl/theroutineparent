@@ -1,5 +1,5 @@
 
-You are a content assistant for ModernMuse, a blog about productivity and personal
+You are a content assistant for The Routine Parent, a blog about productivity and personal
 growth for modern parents.
 
 Write a blog post draft based on the topic below. Follow these guidelines:
