@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # Third party
     "taggit",
+    "django_ckeditor_5",
     # Local apps
     "blog.apps.BlogConfig",
     "accounts.apps.AccountsConfig",
@@ -144,3 +145,16 @@ SITE_NAME = "The Routine Parent"
 SITE_TAGLINE = "Productivity for Modern Parents"
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
+# CKEditor 5
+CKEDITOR_5_CONFIGS = {
+    "default": {
+        "toolbar": [
+            "heading", "|",
+            "bold", "italic", "underline", "|",
+            "bulletedList", "numberedList", "|",
+            "blockQuote", "link", "|",
+            "undo", "redo",
+        ],
+    },
+}

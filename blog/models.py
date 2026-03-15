@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.text import slugify
 from taggit.managers import TaggableManager
+from django_ckeditor_5.fields import CKEditor5Field
 
 
 class Pillar(models.Model):
@@ -52,7 +53,7 @@ class Post(models.Model):
         max_length=300, blank=True,
         help_text="Optional subtitle shown below the title"
     )
-    body = models.TextField()
+    body = CKEditor5Field(config_name="default")
     excerpt = models.TextField(
         max_length=500, blank=True,
         help_text="Short summary for post cards and SEO (auto-generated if blank)"
