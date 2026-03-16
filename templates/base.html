@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}RoutineParent{% endblock %}</title>
+    <title>{% block title %}The Routine Parent{% endblock %}</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -15,15 +15,18 @@
         }
 
         /* Navigation */
-        nav {
+        .nav-wrapper {
             background-color: #fff;
             border-bottom: 1px solid #e8e4df;
+        }
+
+        nav {
+            max-width: 1100px;
+            margin: 0 auto;
             padding: 1.2rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 1100px;
-            margin: 0 auto;
         }
 
         nav .logo {
@@ -47,12 +50,88 @@
 
         nav .nav-links a:hover { color: #7c956a; }
 
+        /* Hamburger */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+            background: none;
+            border: none;
+            padding: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 2px;
+            background-color: #2c2c2c;
+            transition: all 0.3s;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+
+            nav .nav-links {
+                display: none;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background: #fff;
+                flex-direction: column;
+                padding: 1rem 2rem 1.5rem;
+                border-bottom: 1px solid #e8e4df;
+                gap: 0.8rem;
+                z-index: 100;
+            }
+
+            nav .nav-links.active { display: flex; }
+
+            nav .nav-links a { font-size: 1.05rem; }
+
+            nav { position: relative; }
+        }
+
         /* Main Content */
         .container {
             max-width: 800px;
             margin: 0 auto;
             padding: 2rem;
         }
+
+        /* Search Bar */
+        .search-form {
+            max-width: 500px;
+            margin: 0 auto 2rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .search-form input {
+            flex: 1;
+            padding: 0.6rem 1rem;
+            border: 1px solid #e8e4df;
+            border-radius: 6px;
+            font-family: Georgia, serif;
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .search-form input:focus { border-color: #7c956a; }
+
+        .search-form button {
+            padding: 0.6rem 1.2rem;
+            background: #7c956a;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: Georgia, serif;
+            font-size: 0.95rem;
+        }
+
+        .search-form button:hover { background: #6b8459; }
 
         /* Post Cards */
         .post-card {
@@ -141,6 +220,93 @@
 
         .page-header p { color: #888; font-size: 1.05rem; }
 
+        /* Newsletter */
+        .newsletter-box {
+            background: #fff;
+            border: 1px solid #e8e4df;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .newsletter-box h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .newsletter-box p {
+            color: #888;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 0.5rem;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 0.6rem 1rem;
+            border: 1px solid #e8e4df;
+            border-radius: 6px;
+            font-family: Georgia, serif;
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .newsletter-form input:focus { border-color: #7c956a; }
+
+        .newsletter-form button {
+            padding: 0.6rem 1.2rem;
+            background: #7c956a;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: Georgia, serif;
+            font-size: 0.95rem;
+        }
+
+        .newsletter-form button:hover { background: #6b8459; }
+
+        .newsletter-message {
+            margin-top: 0.8rem;
+            font-size: 0.9rem;
+        }
+
+        .newsletter-message.success { color: #7c956a; }
+        .newsletter-message.error { color: #c0392b; }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            padding: 1rem 0;
+        }
+
+        .pagination a, .pagination span {
+            padding: 0.5rem 1rem;
+            border: 1px solid #e8e4df;
+            border-radius: 6px;
+            text-decoration: none;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .pagination a:hover { background: #f0ebe3; }
+
+        .pagination .current {
+            background: #7c956a;
+            color: #fff;
+            border-color: #7c956a;
+        }
+
         /* Footer */
         footer {
             text-align: center;
@@ -150,21 +316,35 @@
             color: #999;
             font-size: 0.85rem;
         }
+
+        @media (max-width: 768px) {
+            .newsletter-form { flex-direction: column; }
+            .search-form { flex-direction: column; }
+            .post-detail h1 { font-size: 1.6rem; }
+            .container { padding: 1rem; }
+        }
     </style>
     {% block extra_css %}{% endblock %}
 </head>
 <body>
-    <nav>
-        <a href="{% url 'blog:post_list' %}" class="logo">The Routine<span>Parent</span></a>
-        <ul class="nav-links">
-            <li><a href="{% url 'blog:post_list' %}">Home</a></li>
-            <li><a href="{% url 'blog:pillar_posts' 'parent-productivity' %}">Productivity</a></li>
-            <li><a href="{% url 'blog:pillar_posts' 'raising-independent-kids' %}">Raising Kids</a></li>
-            <li><a href="{% url 'blog:pillar_posts' 'personal-growth-for-parents' %}">Personal Growth</a></li>
-            <li><a href="{% url 'blog:pillar_posts' 'real-life-systems' %}">Systems</a></li>
-            <li><a href="{% url 'blog:about' %}">About</a></li>
-        </ul>
-    </nav>
+    <div class="nav-wrapper">
+        <nav>
+            <a href="{% url 'blog:post_list' %}" class="logo">The Routine<span>Parent</span></a>
+            <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('active')">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="{% url 'blog:post_list' %}">Home</a></li>
+                <li><a href="{% url 'blog:pillar_posts' 'parent-productivity' %}">Productivity</a></li>
+                <li><a href="{% url 'blog:pillar_posts' 'raising-independent-kids' %}">Raising Kids</a></li>
+                <li><a href="{% url 'blog:pillar_posts' 'personal-growth-for-parents' %}">Personal Growth</a></li>
+                <li><a href="{% url 'blog:pillar_posts' 'real-life-systems' %}">Systems</a></li>
+                <li><a href="{% url 'blog:about' %}">About</a></li>
+            </ul>
+        </nav>
+    </div>
 
     <div class="container">
         {% block content %}{% endblock %}

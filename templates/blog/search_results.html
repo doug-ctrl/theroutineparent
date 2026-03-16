@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Search: {{ query }} — The Routine Parent{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Search Results</h1>
+    <p>{{ posts|length }} result{{ posts|length|pluralize }} for "{{ query }}"</p>
+</div>
+
+<form class="search-form" action="{% url 'blog:search' %}" method="get">
+    <input type="text" name="q" placeholder="Search posts..." value="{{ query }}">
+    <button type="submit">Search</button>
+</form>
+
+{% for post in posts %}
+<article class="post-card">
+    <div class="post-meta">
+        {% if post.pillar %}
+        <span class="pillar">{{ post.pillar.name }}</span>
+        {% endif %}
+        · {{ post.publish|date:"M d, Y" }} · {{ post.reading_time }} min read
+    </div>
+    <h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
+    <p class="post-excerpt">{{ post.excerpt }}</p>
+    <a href="{{ post.get_absolute_url }}" class="read-more">Read more →</a>
+</article>
+{% empty %}
+<p style="text-align: center; color: #999; padding: 3rem 0;">No posts found. Try a different search term.</p>
+{% endfor %}
+{% endblock %}tml>

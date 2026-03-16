@@ -107,7 +107,10 @@ class Post(models.Model):
         if not self.slug:
             self.slug = slugify(self.title)
         if not self.excerpt and self.body:
-            self.excerpt = self.body[:497] + "..." if len(self.body) > 500 else self.body
+            import re
+            clean_body = re.sub(r'<[^>]+>', '', self.body)
+            clean_body = clean_body.replace('&nbsp;', ' ').strip()
+            self.excerpt = clean_body[:497] + "..." if len(clean_body) > 500 else clean_body
         super().save(*args, **kwargs)
 
     @property

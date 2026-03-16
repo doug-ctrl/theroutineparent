@@ -8,6 +8,11 @@
     <p>Productivity for Modern Parents</p>
 </div>
 
+<form class="search-form" action="{% url 'blog:search' %}" method="get">
+    <input type="text" name="q" placeholder="Search posts..." value="{{ request.GET.q|default:'' }}">
+    <button type="submit">Search</button>
+</form>
+
 {% for post in posts %}
 <article class="post-card">
     <div class="post-meta">
@@ -24,4 +29,37 @@
 {% empty %}
 <p style="text-align: center; color: #999; padding: 3rem 0;">No posts yet. Check back soon!</p>
 {% endfor %}
+
+{% if is_paginated %}
+<div class="pagination">
+    {% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}">← Previous</a>
+    {% endif %}
+    {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+        <span class="current">{{ num }}</span>
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+        <a href="?page={{ num }}">{{ num }}</a>
+        {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}">Next →</a>
+    {% endif %}
+</div>
+{% endif %}
+
+<div class="newsletter-box">
+    <h3>Stay in the loop</h3>
+    <p>Get new posts delivered to your inbox. No spam, just practical parenting ideas.</p>
+    <form class="newsletter-form" method="post" action="{% url 'blog:newsletter_signup' %}">
+        {% csrf_token %}
+        <input type="email" name="email" placeholder="Your email address" required>
+        <button type="submit">Subscribe</button>
+    </form>
+    {% if messages %}
+    {% for message in messages %}
+    <p class="newsletter-message {% if message.tags == 'success' %}success{% else %}error{% endif %}">{{ message }}</p>
+    {% endfor %}
+    {% endif %}
+</div>
 {% endblock %}
