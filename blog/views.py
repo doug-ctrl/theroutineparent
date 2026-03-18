@@ -1,8 +1,9 @@
 from django.views.generic import ListView, DetailView, TemplateView
 from django.db.models import Q
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages
-from .models import Post, Pillar, NewsletterSubscriber
+from .models import Post, Pillar, Comment, NewsletterSubscriber
+from .forms import CommentForm
 
 
 class PostListView(ListView):
@@ -26,6 +27,32 @@ class PostDetailView(DetailView):
         return Post.objects.filter(
             status=Post.Status.PUBLISHED
         ).select_related("pillar", "author")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["comments"] = self.object.comments.filter(active=True)
+        context["comment_form"] = CommentForm()
+        context["related_posts"] = Post.objects.filter(
+            status=Post.Status.PUBLISHED,
+            pillar=self.object.pillar
+        ).exclude(id=self.object.id).select_related("pillar")[:3]
+        return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            Comment.objects.create(
+                post=self.object,
+                name=form.cleaned_data["name"],
+                email=form.cleaned_data["email"],
+                body=form.cleaned_data["body"],
+            )
+            messages.success(request, "Your comment has been posted!")
+            return redirect(self.object.get_absolute_url())
+        context = self.get_context_data()
+        context["comment_form"] = form
+        return self.render_to_response(context)
 
 
 class PillarPostsView(ListView):

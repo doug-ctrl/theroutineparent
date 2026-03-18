@@ -24,5 +24,65 @@
         {% endfor %}
     </div>
     {% endif %}
+
+    <!-- Share Buttons -->
+    <div class="share-buttons">
+        <span class="share-label">Share this post:</span>
+        <a href="https://twitter.com/intent/tweet?text={{ post.title|urlencode }}&url={{ request.build_absolute_uri }}" target="_blank" class="share-btn share-twitter">Twitter</a>
+        <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank" class="share-btn share-facebook">Facebook</a>
+        <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}" target="_blank" class="share-btn share-linkedin">LinkedIn</a>
+        <a href="https://wa.me/?text={{ post.title|urlencode }}%20{{ request.build_absolute_uri }}" target="_blank" class="share-btn share-whatsapp">WhatsApp</a>
+    </div>
 </article>
+
+<!-- Related Posts -->
+{% if related_posts %}
+<div class="related-posts">
+    <h3>More from {{ post.pillar.name }}</h3>
+    {% for related in related_posts %}
+    <article class="post-card">
+        <div class="post-meta">
+            {{ related.publish|date:"M d, Y" }} · {{ related.reading_time }} min read
+        </div>
+        <h2><a href="{{ related.get_absolute_url }}">{{ related.title }}</a></h2>
+        <p class="post-excerpt">{{ related.excerpt }}</p>
+        <a href="{{ related.get_absolute_url }}" class="read-more">Read more →</a>
+    </article>
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- Comments Section -->
+<div class="comments-section">
+    <h3>Comments ({{ comments|length }})</h3>
+
+    {% if messages %}
+    {% for message in messages %}
+    <p class="newsletter-message success">{{ message }}</p>
+    {% endfor %}
+    {% endif %}
+
+    {% for comment in comments %}
+    <div class="comment">
+        <div class="comment-header">
+            <strong>{{ comment.name }}</strong>
+            <span class="comment-date">· {{ comment.created|date:"M d, Y" }}</span>
+        </div>
+        <p class="comment-body">{{ comment.body }}</p>
+    </div>
+    {% empty %}
+    <p class="no-comments">No comments yet. Be the first to share your thoughts!</p>
+    {% endfor %}
+
+    <div class="comment-form-box">
+        <h4>Leave a comment</h4>
+        <form method="post">
+            {% csrf_token %}
+            {{ comment_form.name }}
+            {{ comment_form.email }}
+            {{ comment_form.body }}
+            <button type="submit" class="comment-submit">Post Comment</button>
+        </form>
+    </div>
+</div>
 {% endblock %}
