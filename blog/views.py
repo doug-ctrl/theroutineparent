@@ -2,6 +2,8 @@ from django.views.generic import ListView, DetailView, TemplateView
 from django.db.models import Q
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 from .models import Post, Pillar, Comment, NewsletterSubscriber
 from .forms import CommentForm
 
@@ -35,7 +37,7 @@ class PostDetailView(DetailView):
         context["related_posts"] = Post.objects.filter(
             status=Post.Status.PUBLISHED,
             pillar=self.object.pillar
-        ).exclude(id=self.object.id).select_related("pillar")[:3]
+        ).exclude(id=self.object.id).select_related("pillar", "author")[:3]
         return context
 
     def post(self, request, *args, **kwargs):
@@ -59,6 +61,7 @@ class PillarPostsView(ListView):
     model = Post
     template_name = "blog/pillar_posts.html"
     context_object_name = "posts"
+    paginate_by = 6
 
     def get_queryset(self):
         return Post.objects.filter(
@@ -68,7 +71,7 @@ class PillarPostsView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["pillar"] = Pillar.objects.get(slug=self.kwargs["slug"])
+        context["pillar"] = get_object_or_404(Pillar, slug=self.kwargs["slug"])
         return context
 
 
@@ -76,6 +79,7 @@ class SearchView(ListView):
     model = Post
     template_name = "blog/search_results.html"
     context_object_name = "posts"
+    paginate_by = 10
 
     def get_queryset(self):
         query = self.request.GET.get("q", "")
@@ -98,8 +102,13 @@ class AboutView(TemplateView):
 
 def newsletter_signup(request):
     if request.method == "POST":
-        email = request.POST.get("email", "").strip()
+        email = request.POST.get("email", "").strip().lower()
         if email:
+            try:
+                validate_email(email)
+            except ValidationError:
+                messages.error(request, "Please enter a valid email address.")
+                return redirect("blog:post_list")
             if NewsletterSubscriber.objects.filter(email=email).exists():
                 messages.info(request, "You're already subscribed!")
             else:

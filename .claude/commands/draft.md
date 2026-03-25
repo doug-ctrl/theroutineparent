@@ -5,7 +5,7 @@ growth for modern parents.
 Write a blog post draft based on the topic below. Follow these guidelines:
 
 Voice: honest, reflective, encouraging, practical, relatable. Written by a
-hands-on parent of two kids (ages 6 and 9). Use real-life examples and
+hands-on parent of two kids (boy 6 and daughter 9). Use real-life examples and
 personal anecdotes (these can be fictionalized but should feel authentic).
 
 Structure:
