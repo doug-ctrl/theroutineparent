@@ -6,6 +6,9 @@ from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from .models import Post, Pillar, Comment, NewsletterSubscriber
 from .forms import CommentForm
+from django.http import FileResponse
+from django.conf import settings
+import os
 
 
 class PostListView(ListView):
@@ -108,10 +111,17 @@ def newsletter_signup(request):
                 validate_email(email)
             except ValidationError:
                 messages.error(request, "Please enter a valid email address.")
-                return redirect("blog:post_list")
+                return redirect("blog:free_planner")
             if NewsletterSubscriber.objects.filter(email=email).exists():
                 messages.info(request, "You're already subscribed!")
             else:
                 NewsletterSubscriber.objects.create(email=email)
                 messages.success(request, "Thanks for subscribing!")
-    return redirect("blog:post_list")
+    return redirect("blog:free_planner")
+
+class DownloadPageView(TemplateView):
+    template_name = "pages/download.html"
+
+def download_planner(request):
+    file_path = os.path.join(settings.MEDIA_ROOT, "downloads", "weekly_family_planner.pdf")
+    return FileResponse(open(file_path, "rb"), content_type="application/pdf", as_attachment=True, filename="Weekly_Family_Planner_The_Routine_Parent.pdf")

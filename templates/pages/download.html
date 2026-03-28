@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Your Free Weekly Planner — The Routine Parent{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Your Weekly Family Planner</h1>
+    <p>Thanks for subscribing! Here's your free download.</p>
+</div>
+
+<article class="post-detail">
+    <div class="post-body" style="text-align: center;">
+        <p>This is the same weekly planning template we use in our family every Sunday. Print it out, stick it on the fridge, and use it to plan your week in 20 minutes.</p>
+
+        <a href="{% url 'blog:download_planner' %}" class="download-btn">Download Weekly Planner (PDF)</a>
+
+        <p style="margin-top: 2rem; color: #888; font-size: 0.85rem;">This template is for personal use only — not for resale or redistribution.</p>
+
+        <p style="margin-top: 2rem;">Want more templates like this? Stay subscribed — we'll send new ones as they're released.</p>
+    </div>
+</article>
+{% endblock %}

@@ -49,8 +49,8 @@
 {% endif %}
 
 <div class="newsletter-box">
-    <h3>Stay in the loop</h3>
-    <p>Get new posts delivered to your inbox. No spam, just practical parenting ideas.</p>
+    <h3>Get Our Free Weekly Family Planner</h3>
+    <p>Subscribe and get instant access to the same weekly planning template we use every Sunday</p>
     <form class="newsletter-form" method="post" action="{% url 'blog:newsletter_signup' %}">
         {% csrf_token %}
         <input type="email" name="email" placeholder="Your email address" required>
