@@ -4,8 +4,8 @@ from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
-from .models import Post, Pillar, Comment, NewsletterSubscriber
-from .forms import CommentForm
+from .models import Post, Pillar, Comment, NewsletterSubscriber, ContactMessage
+from .forms import CommentForm, ContactForm
 from django.http import FileResponse
 from django.conf import settings
 import os
@@ -129,3 +129,26 @@ def download_planner(request):
 def download_chore_chart(request):
     file_path = os.path.join(settings.MEDIA_ROOT, "downloads", "kids_chore_chart.pdf")
     return FileResponse(open(file_path, "rb"), content_type="application/pdf", as_attachment=True, filename="Kids_Chore_Chart_The_Routine_Parent.pdf")
+
+class ContactView(TemplateView):
+    template_name = "pages/contact.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["contact_form"] = ContactForm()
+        return context
+
+    def post(self, request, *args, **kwargs):
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            ContactMessage.objects.create(
+                name=form.cleaned_data["name"],
+                email=form.cleaned_data["email"],
+                subject=form.cleaned_data["subject"],
+                message=form.cleaned_data["message"],
+            )
+            messages.success(request, "Thanks for your message! I'll get back to you soon.")
+            return redirect("blog:contact")
+        context = self.get_context_data()
+        context["contact_form"] = form
+        return self.render_to_response(context)

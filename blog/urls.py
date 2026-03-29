@@ -13,4 +13,5 @@ urlpatterns = [
     path("post/<slug:slug>/", views.PostDetailView.as_view(), name="post_detail"),
     path("pillar/<slug:slug>/", views.PillarPostsView.as_view(), name="pillar_posts"),
     path("about/", views.AboutView.as_view(), name="about"),
+    path("contact/", views.ContactView.as_view(), name="contact"),
 ]

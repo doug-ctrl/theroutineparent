@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Pillar, Post, Comment, NewsletterSubscriber
+from .models import Pillar, Post, Comment, NewsletterSubscriber, ContactMessage
 
 
 @admin.register(Pillar)
@@ -53,3 +53,10 @@ class NewsletterSubscriberAdmin(admin.ModelAdmin):
     list_display = ["email", "name", "subscribed_at", "is_active"]
     list_filter = ["is_active", "subscribed_at"]
     search_fields = ["email", "name"]
+
+@admin.register(ContactMessage)
+class ContactMessageAdmin(admin.ModelAdmin):
+    list_display = ["subject", "name", "email", "created", "is_read"]
+    list_filter = ["is_read", "created"]
+    list_editable = ["is_read"]
+    readonly_fields = ["name", "email", "subject", "message", "created"]
