@@ -26,12 +26,14 @@
             color: #2c2c2c;
             background-color: #faf9f6;
             line-height: 1.8;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         /* Navigation */
         .nav-wrapper {
             background-color: #fff;
             border-bottom: 1px solid #e8e4df;
+            transition: background-color 0.3s, border-color 0.3s;
         }
 
         nav {
@@ -64,6 +66,13 @@
 
         nav .nav-links a:hover { color: #7c956a; }
 
+        /* Nav Right (toggle + hamburger) */
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
         /* Hamburger */
         .hamburger {
             display: none;
@@ -82,6 +91,25 @@
             transition: all 0.3s;
         }
 
+        /* Dark Mode Toggle */
+        .dark-mode-toggle {
+            background: none;
+            border: 1px solid #e8e4df;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .dark-mode-toggle:hover {
+            background: #f0ebe3;
+        }
+
         /* Mobile */
         @media (max-width: 768px) {
             .hamburger { display: flex; }
@@ -98,6 +126,7 @@
                 border-bottom: 1px solid #e8e4df;
                 gap: 0.8rem;
                 z-index: 100;
+                transition: background-color 0.3s, border-color 0.3s;
             }
 
             nav .nav-links.active { display: flex; }
@@ -130,6 +159,7 @@
             font-family: Georgia, serif;
             font-size: 0.95rem;
             outline: none;
+            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
         }
 
         .search-form input:focus { border-color: #7c956a; }
@@ -154,14 +184,14 @@
             border-radius: 8px;
             padding: 2rem;
             margin-bottom: 1.5rem;
-            transition: box-shadow 0.2s;
+            transition: box-shadow 0.2s, background-color 0.3s, border-color 0.3s;
         }
 
         .post-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
 
         .post-card h2 { font-size: 1.5rem; margin-bottom: 0.5rem; }
 
-        .post-card h2 a { color: #2c2c2c; text-decoration: none; }
+        .post-card h2 a { color: #2c2c2c; text-decoration: none; transition: color 0.3s; }
 
         .post-card h2 a:hover { color: #7c956a; }
 
@@ -177,6 +207,7 @@
             padding: 0.2rem 0.6rem;
             border-radius: 4px;
             font-size: 0.8rem;
+            transition: background-color 0.3s;
         }
 
         .post-excerpt { color: #555; }
@@ -220,6 +251,7 @@
             font-size: 0.8rem;
             margin-right: 0.4rem;
             text-decoration: none;
+            transition: background-color 0.3s;
         }
 
         .tag:hover { background: #e4ddd3; }
@@ -242,6 +274,7 @@
             padding: 2rem;
             margin-top: 2rem;
             text-align: center;
+            transition: background-color 0.3s, border-color 0.3s;
         }
 
         .newsletter-box h3 {
@@ -270,6 +303,7 @@
             font-family: Georgia, serif;
             font-size: 0.95rem;
             outline: none;
+            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
         }
 
         .newsletter-form input:focus { border-color: #7c956a; }
@@ -311,6 +345,7 @@
             text-decoration: none;
             color: #666;
             font-size: 0.9rem;
+            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
         }
 
         .pagination a:hover { background: #f0ebe3; }
@@ -330,6 +365,7 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 0.5rem;
+            transition: border-color 0.3s;
         }
 
         .share-label {
@@ -359,6 +395,7 @@
             margin-top: 3rem;
             padding-top: 2rem;
             border-top: 1px solid #e8e4df;
+            transition: border-color 0.3s;
         }
 
         .related-posts h3 {
@@ -371,6 +408,7 @@
             margin-top: 3rem;
             padding-top: 2rem;
             border-top: 1px solid #e8e4df;
+            transition: border-color 0.3s;
         }
 
         .comments-section h3 {
@@ -384,6 +422,7 @@
             border-radius: 8px;
             padding: 1.2rem;
             margin-bottom: 1rem;
+            transition: background-color 0.3s, border-color 0.3s;
         }
 
         .comment-header {
@@ -410,6 +449,7 @@
             border-radius: 8px;
             padding: 1.5rem;
             margin-top: 1.5rem;
+            transition: background-color 0.3s, border-color 0.3s;
         }
 
         .comment-form-box h4 {
@@ -426,6 +466,7 @@
             font-size: 0.95rem;
             margin-bottom: 0.8rem;
             outline: none;
+            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
         }
 
         .comment-input:focus, .comment-textarea:focus { border-color: #7c956a; }
@@ -440,6 +481,7 @@
             margin-bottom: 0.8rem;
             outline: none;
             resize: vertical;
+            transition: background-color 0.3s, border-color 0.3s, color 0.3s;
         }
 
         .comment-submit {
@@ -479,6 +521,7 @@
             padding: 1.5rem;
             margin-top: 2rem;
             text-align: center;
+            transition: background-color 0.3s, border-color 0.3s;
         }
 
         .free-download-cta h3 {
@@ -493,14 +536,214 @@
             margin-bottom: 1rem;
         }
 
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 2rem;
-            margin-top: 3rem;
-            border-top: 1px solid #e8e4df;
-            color: #999;
-            font-size: 0.85rem;
+        /* =========================================
+           DARK MODE STYLES
+           ========================================= */
+
+        body.dark-mode {
+            background-color: #1a1a2e;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .nav-wrapper {
+            background-color: #16213e;
+            border-bottom-color: #2a2a4a;
+        }
+
+        body.dark-mode nav .nav-links a {
+            color: #b0b0b0;
+        }
+
+        body.dark-mode nav .nav-links a:hover {
+            color: #a3b88c;
+        }
+
+        body.dark-mode .post-card {
+            background: #16213e;
+            border-color: #2a2a4a;
+        }
+
+        body.dark-mode .post-card:hover {
+            box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+        }
+
+        body.dark-mode .post-card h2 a {
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .post-card h2 a:hover {
+            color: #a3b88c;
+        }
+
+        body.dark-mode .post-excerpt {
+            color: #b0b0b0;
+        }
+
+        body.dark-mode .post-meta {
+            color: #808080;
+        }
+
+        body.dark-mode .post-meta .pillar {
+            background: #2a2a4a;
+            color: #a3b88c;
+        }
+
+        body.dark-mode .post-detail h1 {
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .post-detail .subtitle {
+            color: #808080;
+        }
+
+        body.dark-mode .post-body {
+            color: #d0d0d0;
+        }
+
+        body.dark-mode .page-header h1 {
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .page-header p {
+            color: #808080;
+        }
+
+        body.dark-mode .tag {
+            background: #2a2a4a;
+            color: #a3b88c;
+        }
+
+        body.dark-mode .tag:hover {
+            background: #3a3a5a;
+        }
+
+        body.dark-mode .newsletter-box {
+            background: #16213e;
+            border-color: #2a2a4a;
+        }
+
+        body.dark-mode .newsletter-box h3 {
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .newsletter-box p {
+            color: #808080;
+        }
+
+        body.dark-mode .newsletter-form input,
+        body.dark-mode .search-form input {
+            background: #1a1a2e;
+            border-color: #2a2a4a;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .comment-form-box {
+            background: #16213e;
+            border-color: #2a2a4a;
+        }
+
+        body.dark-mode .comment-form-box h4 {
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .comment {
+            background: #16213e;
+            border-color: #2a2a4a;
+        }
+
+        body.dark-mode .comment-header {
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .comment-body {
+            color: #b0b0b0;
+        }
+
+        body.dark-mode .comment-input,
+        body.dark-mode .comment-textarea {
+            background: #1a1a2e;
+            border-color: #2a2a4a;
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .free-download-cta {
+            background: #16213e;
+            border-color: #2a2a4a;
+        }
+
+        body.dark-mode .free-download-cta h3 {
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .free-download-cta p {
+            color: #b0b0b0;
+        }
+
+        body.dark-mode .related-posts {
+            border-top-color: #2a2a4a;
+        }
+
+        body.dark-mode .related-posts h3 {
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .share-buttons {
+            border-top-color: #2a2a4a;
+        }
+
+        body.dark-mode .comments-section {
+            border-top-color: #2a2a4a;
+        }
+
+        body.dark-mode .comments-section h3 {
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .dark-mode-toggle {
+            border-color: #2a2a4a;
+        }
+
+        body.dark-mode .dark-mode-toggle:hover {
+            background: #2a2a4a;
+        }
+
+        body.dark-mode footer {
+            border-top-color: #2a2a4a;
+            color: #606060;
+        }
+
+        body.dark-mode .pagination a,
+        body.dark-mode .pagination span {
+            border-color: #2a2a4a;
+            color: #b0b0b0;
+        }
+
+        body.dark-mode .pagination a:hover {
+            background: #2a2a4a;
+        }
+
+        body.dark-mode .hamburger span {
+            background-color: #e0e0e0;
+        }
+
+        body.dark-mode .read-more {
+            color: #a3b88c;
+        }
+
+        body.dark-mode .no-comments {
+            color: #606060;
+        }
+
+        body.dark-mode .share-label {
+            color: #606060;
+        }
+
+        body.dark-mode .comment-date {
+            color: #606060;
+        }
+
+        body.dark-mode .newsletter-message.success {
+            color: #a3b88c;
         }
 
         @media (max-width: 768px) {
@@ -509,6 +752,11 @@
             .post-detail h1 { font-size: 1.6rem; }
             .container { padding: 1rem; }
             .share-buttons { justify-content: center; }
+
+            body.dark-mode nav .nav-links {
+                background: #16213e;
+                border-bottom-color: #2a2a4a;
+            }
         }
     </style>
     {% block extra_css %}{% endblock %}
@@ -517,11 +765,16 @@
     <div class="nav-wrapper">
         <nav>
             <a href="{% url 'blog:post_list' %}" class="logo"><img src="{% static 'images/logo.png' %}" alt="The Routine Parent" height="50"></a>
-            <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('active')">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+            <div class="nav-right">
+                <button class="dark-mode-toggle" onclick="toggleDarkMode()" title="Toggle dark mode">
+                    <span class="toggle-icon">🌙</span>
+                </button>
+                <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('active')">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
             <ul class="nav-links">
                 <li><a href="{% url 'blog:post_list' %}">Home</a></li>
                 <li><a href="{% url 'blog:pillar_posts' 'parent-productivity' %}">Productivity</a></li>
@@ -543,5 +796,27 @@
     </footer>
 
     {% block extra_js %}{% endblock %}
+
+    <script>
+    function toggleDarkMode() {
+        document.body.classList.toggle('dark-mode');
+        const isDark = document.body.classList.contains('dark-mode');
+        document.querySelector('.toggle-icon').textContent = isDark ? '☀️' : '🌙';
+        document.cookie = 'darkMode=' + (isDark ? 'true' : 'false') + ';path=/;max-age=31536000';
+    }
+
+    // Check saved preference on page load
+    (function() {
+        const cookies = document.cookie.split(';');
+        for (let cookie of cookies) {
+            cookie = cookie.trim();
+            if (cookie.startsWith('darkMode=true')) {
+                document.body.classList.add('dark-mode');
+                document.querySelector('.toggle-icon').textContent = '☀️';
+                break;
+            }
+        }
+    })();
+    </script>
 </body>
 </html>
