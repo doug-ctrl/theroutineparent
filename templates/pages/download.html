@@ -1,23 +1,30 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Your Free Weekly Planner — The Routine Parent{% endblock %}
+{% block title %}Your Free Templates — The Routine Parent{% endblock %}
 
 {% block content %}
 <div class="page-header">
-    <h1>Your Weekly Family Planner</h1>
-    <p>Thanks for subscribing! Here's your free download.</p>
+    <h1>Your Free Templates</h1>
+    <p>Thanks for subscribing! Here are your free downloads.</p>
 </div>
 
 <article class="post-detail">
     <div class="post-body" style="text-align: center;">
-        <p>This is the same weekly planning template we use in our family every Sunday. Print it out, stick it on the fridge, and use it to plan your week in 20 minutes.</p>
 
+        <h2 style="font-size: 1.3rem; margin-bottom: 0.5rem;">Weekly Family Planner</h2>
+        <p>The same weekly planning template we use every Sunday. Print it out, stick it on the fridge, and plan your week in 20 minutes.</p>
         <a href="{% url 'blog:download_planner' %}" class="download-btn">Download Weekly Planner (PDF)</a>
 
-        <p style="margin-top: 2rem; color: #888; font-size: 0.85rem;">This template is for personal use only — not for resale or redistribution.</p>
+        <div style="border-top: 1px solid #e8e4df; margin: 2.5rem 0;"></div>
 
-        <p style="margin-top: 2rem;">Want more templates like this? Stay subscribed — we'll send new ones as they're released.</p>
+        <h2 style="font-size: 1.3rem; margin-bottom: 0.5rem;">Kids' Weekly Chore Chart</h2>
+        <p>A fun, printable chore chart with checkboxes, a star tracker, and a weekly reward section. Print one for each child.</p>
+        <a href="{% url 'blog:download_chore_chart' %}" class="download-btn">Download Chore Chart (PDF)</a>
+
+        <p style="margin-top: 2.5rem; color: #888; font-size: 0.85rem;">These templates are for personal use only — not for resale or redistribution.</p>
+
+        <p style="margin-top: 2rem;">More templates coming soon — stay subscribed!</p>
     </div>
 </article>
 {% endblock %}

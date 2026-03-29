@@ -125,3 +125,7 @@ class DownloadPageView(TemplateView):
 def download_planner(request):
     file_path = os.path.join(settings.MEDIA_ROOT, "downloads", "weekly_family_planner.pdf")
     return FileResponse(open(file_path, "rb"), content_type="application/pdf", as_attachment=True, filename="Weekly_Family_Planner_The_Routine_Parent.pdf")
+
+def download_chore_chart(request):
+    file_path = os.path.join(settings.MEDIA_ROOT, "downloads", "kids_chore_chart.pdf")
+    return FileResponse(open(file_path, "rb"), content_type="application/pdf", as_attachment=True, filename="Kids_Chore_Chart_The_Routine_Parent.pdf")
