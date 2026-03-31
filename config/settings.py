@@ -155,8 +155,18 @@ CKEDITOR_5_CONFIGS = {
             "bold", "italic", "underline", "|",
             "bulletedList", "numberedList", "|",
             "blockQuote", "link", "|",
-            "undo", "redo",
+            "undo", "redo", "|",
+            "sourceEditing",
         ],
+        "plugins": [
+            "GeneralHtmlSupport",
+            "SourceEditing",
+        ],
+        "htmlSupport": {
+            "allow": [
+                {"name": "div", "classes": True, "styles": True}
+            ]
+        },
     },
 }
 # Security settings (only apply in production)
