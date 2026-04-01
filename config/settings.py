@@ -158,10 +158,6 @@ CKEDITOR_5_CONFIGS = {
             "undo", "redo", "|",
             "sourceEditing",
         ],
-        "plugins": [
-            "GeneralHtmlSupport",
-            "SourceEditing",
-        ],
         "htmlSupport": {
             "allow": [
                 {"name": "div", "classes": True, "styles": True}
