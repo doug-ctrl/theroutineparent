@@ -4,10 +4,6 @@
 
 {% block content %}
 <article class="post-detail">
-    <!-- Affiliate Disclosure -->
-    <div class="affiliate-disclosure">
-        <p>📢 <strong>Disclosure:</strong> This post may contain affiliate links. If you purchase through them, I may earn a small commission at no extra cost to you. I only recommend products I genuinely use and believe in.</p>
-    </div>
     <div class="post-meta">
         {% if post.pillar %}
         <span class="pillar">{{ post.pillar.name }}</span>
@@ -36,6 +32,11 @@
         <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}" target="_blank" class="share-btn share-facebook">Facebook</a>
         <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}" target="_blank" class="share-btn share-linkedin">LinkedIn</a>
         <a href="https://wa.me/?text={{ post.title|urlencode }}%20{{ request.build_absolute_uri }}" target="_blank" class="share-btn share-whatsapp">WhatsApp</a>
+    </div>
+
+    <!-- Affiliate Disclosure -->
+    <div class="affiliate-disclosure">
+        <p>📢 <strong>Disclosure:</strong> This post may contain affiliate links. If you purchase through them, I may earn a small commission at no extra cost to you. I only recommend products I genuinely use and believe in.</p>
     </div>
 </article>
 
