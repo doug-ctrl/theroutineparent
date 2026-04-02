@@ -6,9 +6,7 @@ from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from .models import Post, Pillar, Comment, NewsletterSubscriber, ContactMessage
 from .forms import CommentForm, ContactForm
-from django.http import FileResponse
 from django.conf import settings
-import os
 
 
 class PostListView(ListView):
@@ -123,12 +121,12 @@ class DownloadPageView(TemplateView):
     template_name = "pages/download.html"
 
 def download_planner(request):
-    file_path = os.path.join(settings.MEDIA_ROOT, "downloads", "weekly_family_planner.pdf")
-    return FileResponse(open(file_path, "rb"), content_type="application/pdf", as_attachment=True, filename="Weekly_Family_Planner_The_Routine_Parent.pdf")
+    r2_url = "https://pub-53c2d8846d17472f9a9fc9195eba2c02.r2.dev/downloads/weekly_family_planner.pdf"
+    return redirect(r2_url)
 
 def download_chore_chart(request):
-    file_path = os.path.join(settings.MEDIA_ROOT, "downloads", "kids_chore_chart.pdf")
-    return FileResponse(open(file_path, "rb"), content_type="application/pdf", as_attachment=True, filename="Kids_Chore_Chart_The_Routine_Parent.pdf")
+    r2_url = "https://pub-53c2d8846d17472f9a9fc9195eba2c02.r2.dev/downloads/kids_chore_chart.pdf"
+    return redirect(r2_url)
 
 class ContactView(TemplateView):
     template_name = "pages/contact.html"
