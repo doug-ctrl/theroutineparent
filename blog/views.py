@@ -149,6 +149,13 @@ def download_evening_checklist(request):
     response.content = requests.get(r2_url).content
     return response
 
+def download_weekly_goals_tracker(request):
+    r2_url = "https://pub-53c2d8846d17472f9a9fc9195eba2c02.r2.dev/downloads/family_weekly_goals_tracker.pdf"
+    response = HttpResponse(content_type="application/pdf")
+    response["Content-Disposition"] = 'attachment; filename="Family_Weekly_Goals_Tracker_The_Routine_Parent.pdf"'
+    response.content = requests.get(r2_url).content
+    return response
+
 class ContactView(TemplateView):
     template_name = "pages/contact.html"
 
