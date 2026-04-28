@@ -135,6 +135,13 @@ def download_chore_chart(request):
     response.content = requests.get(r2_url).content
     return response
 
+def download_morning_checklist(request):
+    r2_url = "https://pub-53c2d8846d17472f9a9fc9195eba2c02.r2.dev/downloads/morning_routine_checklist.pdf"
+    response = HttpResponse(content_type="application/pdf")
+    response["Content-Disposition"] = 'attachment; filename="Morning_Routine_Checklist_The_Routine_Parent.pdf"'
+    response.content = requests.get(r2_url).content
+    return response
+
 class ContactView(TemplateView):
     template_name = "pages/contact.html"
 
