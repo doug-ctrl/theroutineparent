@@ -142,6 +142,13 @@ def download_morning_checklist(request):
     response.content = requests.get(r2_url).content
     return response
 
+def download_evening_checklist(request):
+    r2_url = "https://pub-53c2d8846d17472f9a9fc9195eba2c02.r2.dev/downloads/evening_routine_checklist.pdf"
+    response = HttpResponse(content_type="application/pdf")
+    response["Content-Disposition"] = 'attachment; filename="Evening_Routine_Checklist_The_Routine_Parent.pdf"'
+    response.content = requests.get(r2_url).content
+    return response
+
 class ContactView(TemplateView):
     template_name = "pages/contact.html"
 

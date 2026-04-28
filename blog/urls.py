@@ -11,6 +11,7 @@ urlpatterns = [
     path("download/planner/", views.download_planner, name="download_planner"),
     path("download/chore-chart/", views.download_chore_chart, name="download_chore_chart"),
     path("download/morningchecklist/", views.download_morning_checklist, name="download_morning_checklist"),
+    path("download/eveningchecklist/", views.download_evening_checklist, name="download_evening_checklist"),
     path("post/<slug:slug>/", views.PostDetailView.as_view(), name="post_detail"),
     path("pillar/<slug:slug>/", views.PillarPostsView.as_view(), name="pillar_posts"),
     path("about/", views.AboutView.as_view(), name="about"),
