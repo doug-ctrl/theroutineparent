@@ -149,8 +149,9 @@ if not DEBUG:
     AWS_STORAGE_BUCKET_NAME = os.getenv('R2_BUCKET_NAME')
     AWS_S3_ENDPOINT_URL = os.getenv('R2_ENDPOINT_URL')
     AWS_S3_CUSTOM_DOMAIN = os.getenv('R2_PUBLIC_URL')
-    AWS_DEFAULT_ACL = 'public-read'
+    AWS_DEFAULT_ACL = None
     AWS_S3_FILE_OVERWRITE = False
+    AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
     MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/'
 
 # Site info
