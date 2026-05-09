@@ -9,7 +9,7 @@ class LatestPostsFeed(Feed):
     description = "Productivity and personal growth for modern parents."
 
     def items(self):
-        return Post.objects.filter(status='published').order_by('-published_date')[:20]
+        return Post.objects.filter(status='PB').order_by('-publish')[:20]
 
     def item_title(self, item):
         return item.title
@@ -18,10 +18,10 @@ class LatestPostsFeed(Feed):
         return item.excerpt
 
     def item_link(self, item):
-        return reverse('post_detail', args=[item.slug])
+        return item.get_absolute_url()
 
     def item_pubdate(self, item):
-        return item.published_date
+        return item.publish
 
     def item_author_name(self, item):
         return "The Routine Parent"
