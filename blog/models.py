@@ -39,7 +39,7 @@ class Pillar(models.Model):
 
 
 class Post(models.Model):
-    """A ModernMuse blog post."""
+    """A RoutineParent blog post."""
 
     class Status(models.TextChoices):
         DRAFT = "DF", "Draft"
