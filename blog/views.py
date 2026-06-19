@@ -156,6 +156,13 @@ def download_weekly_goals_tracker(request):
     response.content = requests.get(r2_url).content
     return response
 
+def download_meal_planner(request):
+    r2_url = "https://pub-53c2d8846d17472f9a9fc9195eba2c02.r2.dev/downloads/weekly_meal_planner.pdf"
+    response = HttpResponse(content_type="application/pdf")
+    response["Content-Disposition"] = 'attachment; filename="Weekly_Meal_Planner_The_Routine_Parent.pdf"'
+    response.content = requests.get(r2_url).content
+    return response
+
 class ContactView(TemplateView):
     template_name = "pages/contact.html"
 
