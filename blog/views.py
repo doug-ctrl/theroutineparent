@@ -8,6 +8,8 @@ from .models import Post, Pillar, Comment, NewsletterSubscriber, ContactMessage
 from .forms import CommentForm, ContactForm
 from django.http import HttpResponse
 import requests
+from django.core.mail import send_mail
+from django.conf import settings
 
 
 class PostListView(ListView):
@@ -179,6 +181,13 @@ class ContactView(TemplateView):
                 email=form.cleaned_data["email"],
                 subject=form.cleaned_data["subject"],
                 message=form.cleaned_data["message"],
+            )
+            send_mail(
+                subject=f"Contact form: {form.cleaned_data['subject']}",
+                message=f"From: {form.cleaned_data['name']} <{form.cleaned_data['email']}>\n\n{form.cleaned_data['message']}",
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[settings.CONTACT_EMAIL],
+                fail_silently=True,
             )
             messages.success(request, "Thanks for your message! I'll get back to you soon.")
             return redirect("blog:contact")
