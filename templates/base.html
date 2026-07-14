@@ -13,14 +13,27 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicon-32x32.png' %}">
     <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon-16x16.png' %}">
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/apple-touch-icon.png' %}">
-    <!-- Google Analytics -->
+    <!-- Google Analytics with Consent Mode v2 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-TFQPTC1VVE"></script>
     <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
+
+    // Default: no analytics/ad cookies until the visitor chooses
+    gtag('consent', 'default', {
+      'analytics_storage': 'denied',
+      'ad_storage': 'denied',
+      'ad_user_data': 'denied',
+      'ad_personalization': 'denied'
+    });
+
     gtag('js', new Date());
     gtag('config', 'G-TFQPTC1VVE');
     </script>
+
+    <!-- GoatCounter — unconditional, runs for every visitor regardless of consent -->
+    <script data-goatcounter="https://theroutineparent.goatcounter.com/count"
+            async src="//gc.zgo.at/count.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}The Routine Parent{% endblock %}</title>
@@ -906,6 +919,69 @@
         body.dark-mode .shop-cta h4 { color: #e0e0e0; }
         body.dark-mode .shop-cta p { color: #b0b0b0; }
 
+        /* Cookie consent banner */
+        .cookie-consent-banner {
+            position: fixed;
+            left: 0; right: 0; bottom: 0;
+            z-index: 9999;
+            background: #f0ebe3;
+            border-top: 1px solid #e8e4df;
+            padding: 1rem 1.5rem;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .cookie-consent-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+        .cookie-consent-text {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #555;
+            flex: 1 1 300px;
+        }
+        .cookie-consent-text a { color: #7c956a; text-decoration: underline; }
+        .cookie-consent-buttons {
+            display: flex;
+            gap: 0.75rem;
+            flex: 0 0 auto;
+        }
+        /* Accept and Reject share identical size/weight/border on purpose —
+           the ICO flags unequal-looking buttons as non-compliant */
+        .cookie-btn {
+            padding: 0.6rem 1.4rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-family: Georgia, serif;
+            font-weight: bold;
+            cursor: pointer;
+            border: 2px solid #7c956a;
+        }
+        .cookie-btn-accept { background: #7c956a; color: #fff; }
+        .cookie-btn-accept:hover { background: #6b8459; }
+        .cookie-btn-reject { background: transparent; color: #7c956a; }
+        .cookie-btn-reject:hover { background: #e4ddd3; }
+
+        .cookie-settings-link { color: #7c956a; text-decoration: none; font-size: 0.85rem; }
+        .cookie-settings-link:hover { text-decoration: underline; }
+
+        body.dark-mode .cookie-consent-banner {
+            background: #16213e;
+            border-top-color: #2a2a4a;
+        }
+        body.dark-mode .cookie-consent-text { color: #b0b0b0; }
+        body.dark-mode .cookie-consent-text a { color: #a3b88c; }
+        body.dark-mode .cookie-btn { border-color: #a3b88c; }
+        body.dark-mode .cookie-btn-accept { background: #a3b88c; color: #1a1a2e; }
+        body.dark-mode .cookie-btn-accept:hover { background: #8fa574; }
+        body.dark-mode .cookie-btn-reject { color: #a3b88c; }
+        body.dark-mode .cookie-btn-reject:hover { background: #2a2a4a; }
+        body.dark-mode .cookie-settings-link { color: #a3b88c; }
+
     </style>
     {% block extra_css %}{% endblock %}
 </head>
@@ -942,7 +1018,22 @@
 
     <footer>
         <p>&copy; 2026 The Routine Parent — Productivity for Modern Parents</p>
+        <p><a href="#" onclick="reopenCookieBanner(); return false;" class="cookie-settings-link">Cookie settings</a></p>
     </footer>
+
+    <!-- Cookie consent banner -->
+    <div id="cookie-consent-banner" class="cookie-consent-banner" style="display:none;" role="dialog" aria-label="Cookie consent">
+        <div class="cookie-consent-inner">
+            <p class="cookie-consent-text">
+                We use cookies to understand how visitors use this site. Analytics cookies are only set if you accept them.
+                <a href="/cookie-policy/">Learn more</a>
+            </p>
+            <div class="cookie-consent-buttons">
+                <button id="cookie-reject-btn" class="cookie-btn cookie-btn-reject">Reject</button>
+                <button id="cookie-accept-btn" class="cookie-btn cookie-btn-accept">Accept</button>
+            </div>
+        </div>
+    </div>
 
     {% block extra_js %}{% endblock %}
 
@@ -965,6 +1056,57 @@
                 break;
             }
         }
+    })();
+    </script>
+
+    <script>
+    (function() {
+        var CONSENT_COOKIE = 'cookie_consent';
+        var CONSENT_DAYS = 182; // roughly 6 months — a common re-consent interval, not a fixed legal requirement
+
+        function getCookie(name) {
+            var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+            return match ? match[2] : null;
+        }
+        function setCookie(name, value, days) {
+            var expires = new Date();
+            expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
+            document.cookie = name + '=' + value + ';expires=' + expires.toUTCString() + ';path=/;SameSite=Lax';
+        }
+
+        var banner = document.getElementById('cookie-consent-banner');
+        var existing = getCookie(CONSENT_COOKIE);
+
+        function applyConsent(choice) {
+            if (typeof gtag === 'function') {
+                gtag('consent', 'update', {
+                    'analytics_storage': choice === 'accepted' ? 'granted' : 'denied'
+                });
+            }
+        }
+
+        if (!existing) {
+            banner.style.display = 'block';
+        } else {
+            applyConsent(existing);
+        }
+
+        document.getElementById('cookie-accept-btn').addEventListener('click', function() {
+            setCookie(CONSENT_COOKIE, 'accepted', CONSENT_DAYS);
+            applyConsent('accepted');
+            banner.style.display = 'none';
+        });
+
+        document.getElementById('cookie-reject-btn').addEventListener('click', function() {
+            setCookie(CONSENT_COOKIE, 'rejected', CONSENT_DAYS);
+            applyConsent('rejected');
+            banner.style.display = 'none';
+        });
+
+        // Lets the footer link reopen the banner so visitors can change their mind
+        window.reopenCookieBanner = function() {
+            banner.style.display = 'block';
+        };
     })();
     </script>
 </body>
