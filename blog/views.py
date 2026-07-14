@@ -103,6 +103,8 @@ class SearchView(ListView):
 class AboutView(TemplateView):
     template_name = "pages/about.html"
 
+class CookiePolicyView(TemplateView):
+    template_name = "pages/cookie_policy.html"
 
 def newsletter_signup(request):
     if request.method == "POST":

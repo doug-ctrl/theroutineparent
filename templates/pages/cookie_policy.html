@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Cookie Policy — The Routine Parent{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Cookie Policy</h1>
+    <p>Last updated: July 2026</p>
+</div>
+
+<div class="post-body">
+    <p>This page explains what cookies this site uses, why, and how you can change your choice at any time.</p>
+
+    <h2 style="margin: 2rem 0 1rem;">What are cookies?</h2>
+    <p>Cookies are small text files stored on your device when you visit a website. Some are essential for the site to work, others help us understand how the site is used.</p>
+
+    <h2 style="margin: 2rem 0 1rem;">Cookies we use</h2>
+
+    <div class="faq-section">
+        <div class="faq-item" style="border-top: none; padding-top: 0;">
+            <p class="faq-q">csrftoken — strictly necessary</p>
+            <p class="faq-a">Protects the site's forms (comments, contact, newsletter signup) against a common type of attack. Always active — required for the site to function securely, no consent needed.</p>
+        </div>
+        <div class="faq-item">
+            <p class="faq-q">cookie_consent — strictly necessary</p>
+            <p class="faq-a">Remembers your Accept/Reject choice from the cookie banner, so we don't ask you again on every visit. Always active — this cookie exists specifically to respect your choice, so it doesn't require separate consent.</p>
+        </div>
+        <div class="faq-item">
+            <p class="faq-q">darkMode — functionality</p>
+            <p class="faq-a">Remembers whether you prefer light or dark mode. Covered by the UK's low-risk "appearance and functionality" exemption — always active, no consent required.</p>
+        </div>
+        <div class="faq-item">
+            <p class="faq-q">_ga and _ga_TFQPTC1VVE — analytics, optional</p>
+            <p class="faq-a">Set by Google Analytics (GA4) only if you click Accept on the cookie banner. Helps us understand which posts are useful and how people find the site. If you click Reject, these are never set.</p>
+        </div>
+    </div>
+
+    <h2 style="margin: 2rem 0 1rem;">Analytics without cookies</h2>
+    <p>We also use GoatCounter, a privacy-first analytics tool that doesn't use cookies or store any information that identifies you. It runs for all visitors, regardless of your cookie choice, and only ever produces aggregate totals (like "this post got 40 views this week") — never anything tied to you individually.</p>
+
+    <h2 style="margin: 2rem 0 1rem;">Changing your choice</h2>
+    <p>You can change your cookie preference at any time using the "Cookie settings" link in the footer of any page.</p>
+
+    <h2 style="margin: 2rem 0 1rem;">Questions</h2>
+    <p>If you have any questions about this policy, you can reach us via the <a href="{% url 'blog:contact' %}">contact page</a>.</p>
+</div>
+{% endblock %}
