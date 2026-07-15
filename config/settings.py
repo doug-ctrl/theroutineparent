@@ -165,6 +165,10 @@ if not DEBUG:
 SITE_NAME = "The Routine Parent"
 SITE_TAGLINE = "Productivity for Modern Parents"
 
+# Resend (transactional email)
+RESEND_API_KEY = os.getenv("RESEND_API_KEY")
+DEFAULT_FROM_EMAIL = "The Routine Parent <hello@theroutineparent.com>"
+
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 # CKEditor 5

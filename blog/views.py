@@ -10,6 +10,8 @@ from django.http import HttpResponse
 import requests
 from django.core.mail import send_mail
 from django.conf import settings
+import resend
+resend.api_key = settings.RESEND_API_KEY
 
 
 class PostListView(ListView):
@@ -184,6 +186,24 @@ class ContactView(TemplateView):
                 subject=form.cleaned_data["subject"],
                 message=form.cleaned_data["message"],
             )
+
+            # Notify hello@ — Reply-To is set to the sender, so replying
+            # from Zoho goes straight to them, not to Resend.
+            try:
+                resend.Emails.send({
+                    "from": settings.DEFAULT_FROM_EMAIL,
+                    "to": ["hello@theroutineparent.com"],
+                    "reply_to": [form.cleaned_data["email"]],
+                    "subject": f"New contact form message: {form.cleaned_data['subject']}",
+                    "text": (
+                        f"From: {form.cleaned_data['name']} <{form.cleaned_data['email']}>\n\n"
+                        f"{form.cleaned_data['message']}\n\n"
+                        f"---\nHit Reply on this email to respond directly to {form.cleaned_data['name']}."
+                    ),
+                })
+            except Exception:
+                pass  # message is already safely in the database either way
+
             messages.success(request, "Thanks for your message! I'll get back to you soon.")
             return redirect("blog:contact")
         context = self.get_context_data()
