@@ -128,42 +128,42 @@ class DownloadPageView(TemplateView):
     template_name = "pages/download.html"
 
 def download_planner(request):
-    r2_url = "https://pub-53c2d8846d17472f9a9fc9195eba2c02.r2.dev/downloads/weekly_family_planner.pdf"
+    r2_url = "https://cdn.theroutineparent.com/downloads/weekly_family_planner.pdf"
     response = HttpResponse(content_type="application/pdf")
     response["Content-Disposition"] = 'attachment; filename="Weekly_Family_Planner_The_Routine_Parent.pdf"'
     response.content = requests.get(r2_url).content
     return response
 
 def download_chore_chart(request):
-    r2_url = "https://pub-53c2d8846d17472f9a9fc9195eba2c02.r2.dev/downloads/kids_chore_chart.pdf"
+    r2_url = "https://cdn.theroutineparent.com/downloads/kids_chore_chart.pdf"
     response = HttpResponse(content_type="application/pdf")
     response["Content-Disposition"] = 'attachment; filename="Kids_Chore_Chart_The_Routine_Parent.pdf"'
     response.content = requests.get(r2_url).content
     return response
 
 def download_morning_checklist(request):
-    r2_url = "https://pub-53c2d8846d17472f9a9fc9195eba2c02.r2.dev/downloads/morning_routine_checklist.pdf"
+    r2_url = "https://cdn.theroutineparent.com/downloads/morning_routine_checklist.pdf"
     response = HttpResponse(content_type="application/pdf")
     response["Content-Disposition"] = 'attachment; filename="Morning_Routine_Checklist_The_Routine_Parent.pdf"'
     response.content = requests.get(r2_url).content
     return response
 
 def download_evening_checklist(request):
-    r2_url = "https://pub-53c2d8846d17472f9a9fc9195eba2c02.r2.dev/downloads/evening_routine_checklist.pdf"
+    r2_url = "https://cdn.theroutineparent.com/downloads/evening_routine_checklist.pdf"
     response = HttpResponse(content_type="application/pdf")
     response["Content-Disposition"] = 'attachment; filename="Evening_Routine_Checklist_The_Routine_Parent.pdf"'
     response.content = requests.get(r2_url).content
     return response
 
 def download_weekly_goals_tracker(request):
-    r2_url = "https://pub-53c2d8846d17472f9a9fc9195eba2c02.r2.dev/downloads/family_weekly_goals_tracker.pdf"
+    r2_url = "https://cdn.theroutineparent.com/downloads/family_weekly_goals_tracker.pdf"
     response = HttpResponse(content_type="application/pdf")
     response["Content-Disposition"] = 'attachment; filename="Family_Weekly_Goals_Tracker_The_Routine_Parent.pdf"'
     response.content = requests.get(r2_url).content
     return response
 
 def download_meal_planner(request):
-    r2_url = "https://pub-53c2d8846d17472f9a9fc9195eba2c02.r2.dev/downloads/weekly_meal_planner.pdf"
+    r2_url = "https://cdn.theroutineparent.com/downloads/weekly_meal_planner.pdf"
     response = HttpResponse(content_type="application/pdf")
     response["Content-Disposition"] = 'attachment; filename="Weekly_Meal_Planner_The_Routine_Parent.pdf"'
     response.content = requests.get(r2_url).content
