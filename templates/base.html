@@ -340,7 +340,7 @@
         .post-card-h:last-child { border-bottom: none; }
 
         .post-card-h .card-thumb {
-            flex: 0 0 130px;
+            flex: 0 0 190px;
             aspect-ratio: 1/1;
             border-radius: 8px;
             overflow: hidden;
@@ -357,6 +357,13 @@
         .post-card-h h2 a:hover { color: #7c956a; }
 
         .post-card-h .post-meta { margin-bottom: 0; }
+
+        .post-card-h .post-excerpt {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
 
         @media (max-width: 500px) {
             .post-card-h { flex-direction: column; }
