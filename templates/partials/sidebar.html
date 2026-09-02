@@ -1,0 +1,34 @@
+<aside class="sidebar">
+    <div class="sidebar-box">
+        <div class="section-label">Browse by Pillar</div>
+        <div class="sidebar-pillars">
+            {% for pillar in sidebar_pillars %}
+            <a href="{{ pillar.get_absolute_url }}">
+                <span>{{ pillar.name }}</span>
+                <span class="count">{{ pillar.post_count }}</span>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+
+    {% if sidebar_recent_posts %}
+    <div class="sidebar-box">
+        <div class="section-label">Recent Posts</div>
+        <div class="sidebar-recent">
+            {% for post in sidebar_recent_posts %}
+            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="sidebar-box sidebar-newsletter">
+        <h3>Free Weekly Planner</h3>
+        <p>Get the exact template we use every Sunday.</p>
+        <form class="sidebar-newsletter-form" method="post" action="{% url 'blog:newsletter_signup' %}">
+            {% csrf_token %}
+            <input type="email" name="email" placeholder="Your email address" required>
+            <button type="submit">Subscribe</button>
+        </form>
+    </div>
+</aside>

@@ -8,58 +8,71 @@
     <p>Productivity for Modern Parents</p>
 </div>
 
-<form class="search-form" action="{% url 'blog:search' %}" method="get">
-    <input type="text" name="q" placeholder="Search posts..." value="{{ request.GET.q|default:'' }}">
-    <button type="submit">Search</button>
-</form>
-
-{% for post in posts %}
-<article class="post-card">
-    <div class="post-meta">
-        {% if post.pillar %}
-        <span class="pillar">{{ post.pillar.name }}</span>
-        {% endif %}
-        · {{ post.publish|date:"M d, Y" }} · {{ post.reading_time }} min read
+{% if featured_post %}
+<div class="hero-post">
+    <div class="hero-post-image">
+        {% include "partials/post_thumb.html" with post=featured_post %}
+        {% if featured_post.pillar %}<span class="hero-post-badge">{{ featured_post.pillar.name }}</span>{% endif %}
     </div>
-    <h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
-    {% if post.subtitle %}<p class="subtitle">{{ post.subtitle }}</p>{% endif %}
-    <p class="post-excerpt">{{ post.excerpt }}</p>
-    <a href="{{ post.get_absolute_url }}" class="read-more">Read more →</a>
-</article>
-{% empty %}
-<p style="text-align: center; color: #999; padding: 3rem 0;">No posts yet. Check back soon!</p>
-{% endfor %}
-
-{% if is_paginated %}
-<div class="pagination">
-    {% if page_obj.has_previous %}
-    <a href="?page={{ page_obj.previous_page_number }}">← Previous</a>
-    {% endif %}
-    {% for num in page_obj.paginator.page_range %}
-        {% if page_obj.number == num %}
-        <span class="current">{{ num }}</span>
-        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-        <a href="?page={{ num }}">{{ num }}</a>
-        {% endif %}
-    {% endfor %}
-    {% if page_obj.has_next %}
-    <a href="?page={{ page_obj.next_page_number }}">Next →</a>
-    {% endif %}
+    <div class="post-meta">
+        {{ featured_post.publish|date:"M d, Y" }} · {{ featured_post.reading_time }} min read
+    </div>
+    <h2><a href="{{ featured_post.get_absolute_url }}">{{ featured_post.title }}</a></h2>
+    {% if featured_post.subtitle %}<p class="subtitle">{{ featured_post.subtitle }}</p>{% endif %}
+    <p class="post-excerpt">{{ featured_post.excerpt }}</p>
+    <a href="{{ featured_post.get_absolute_url }}" class="read-more">Read more →</a>
 </div>
 {% endif %}
 
-<div class="newsletter-box">
-    <h3>Get Our Free Weekly Family Planner</h3>
-    <p>Subscribe and get instant access to the same weekly planning template we use every Sunday</p>
-    <form class="newsletter-form" method="post" action="{% url 'blog:newsletter_signup' %}">
-        {% csrf_token %}
-        <input type="email" name="email" placeholder="Your email address" required>
-        <button type="submit">Subscribe</button>
-    </form>
-    {% if messages %}
-    {% for message in messages %}
-    <p class="newsletter-message {% if message.tags == 'success' %}success{% else %}error{% endif %}">{{ message }}</p>
-    {% endfor %}
-    {% endif %}
+<div class="content-layout">
+    <div class="main-col">
+        <form class="search-form" action="{% url 'blog:search' %}" method="get">
+            <input type="text" name="q" placeholder="Search posts..." value="{{ request.GET.q|default:'' }}">
+            <button type="submit">Search</button>
+        </form>
+
+        <div class="section-label">More Recent Posts</div>
+
+        {% for post in posts %}
+        <article class="post-card-h">
+            <div class="card-thumb">
+                {% include "partials/post_thumb.html" %}
+            </div>
+            <div class="card-body">
+                <div class="post-meta">
+                    {% if post.pillar %}
+                    <span class="pillar">{{ post.pillar.name }}</span>
+                    {% endif %}
+                    · {{ post.publish|date:"M d, Y" }} · {{ post.reading_time }} min read
+                </div>
+                <h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
+                {% if post.subtitle %}<p class="subtitle">{{ post.subtitle }}</p>{% endif %}
+                <p class="post-excerpt">{{ post.excerpt }}</p>
+            </div>
+        </article>
+        {% empty %}
+        <p style="text-align: center; color: #999; padding: 3rem 0;">No posts yet. Check back soon!</p>
+        {% endfor %}
+
+        {% if is_paginated %}
+        <div class="pagination">
+            {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}">← Previous</a>
+            {% endif %}
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                <span class="current">{{ num }}</span>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <a href="?page={{ num }}">{{ num }}</a>
+                {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Next →</a>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+
+    {% include "partials/sidebar.html" %}
 </div>
 {% endblock %}

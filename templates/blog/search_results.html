@@ -13,19 +13,29 @@
     <button type="submit">Search</button>
 </form>
 
-{% for post in posts %}
-<article class="post-card">
-    <div class="post-meta">
-        {% if post.pillar %}
-        <span class="pillar">{{ post.pillar.name }}</span>
-        {% endif %}
-        · {{ post.publish|date:"M d, Y" }} · {{ post.reading_time }} min read
+<div class="content-layout">
+    <div class="main-col">
+        {% for post in posts %}
+        <article class="post-card-h">
+            <div class="card-thumb">
+                {% include "partials/post_thumb.html" %}
+            </div>
+            <div class="card-body">
+                <div class="post-meta">
+                    {% if post.pillar %}
+                    <span class="pillar">{{ post.pillar.name }}</span>
+                    {% endif %}
+                    · {{ post.publish|date:"M d, Y" }} · {{ post.reading_time }} min read
+                </div>
+                <h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
+                <p class="post-excerpt">{{ post.excerpt }}</p>
+            </div>
+        </article>
+        {% empty %}
+        <p style="text-align: center; color: #999; padding: 3rem 0;">No posts found. Try a different search term.</p>
+        {% endfor %}
     </div>
-    <h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
-    <p class="post-excerpt">{{ post.excerpt }}</p>
-    <a href="{{ post.get_absolute_url }}" class="read-more">Read more →</a>
-</article>
-{% empty %}
-<p style="text-align: center; color: #999; padding: 3rem 0;">No posts found. Try a different search term.</p>
-{% endfor %}
-{% endblock %}tml>
+
+    {% include "partials/sidebar.html" %}
+</div>
+{% endblock %}

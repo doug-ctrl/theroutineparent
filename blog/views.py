@@ -21,9 +21,19 @@ class PostListView(ListView):
     paginate_by = 6
 
     def get_queryset(self):
-        return Post.objects.filter(
+        qs = Post.objects.filter(
             status=Post.Status.PUBLISHED
         ).select_related("pillar", "author")
+        self.featured_post = qs.filter(is_featured=True).first() or qs.first()
+        if self.featured_post:
+            qs = qs.exclude(pk=self.featured_post.pk)
+        return qs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if context["page_obj"].number == 1:
+            context["featured_post"] = self.featured_post
+        return context
 
 
 class PostDetailView(DetailView):

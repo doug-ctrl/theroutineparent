@@ -8,17 +8,45 @@
     <p>{{ pillar.description }}</p>
 </div>
 
-{% for post in posts %}
-<article class="post-card">
-    <div class="post-meta">
-        {{ post.publish|date:"M d, Y" }} · {{ post.reading_time }} min read
+<div class="content-layout">
+    <div class="main-col">
+        {% for post in posts %}
+        <article class="post-card-h">
+            <div class="card-thumb">
+                {% include "partials/post_thumb.html" %}
+            </div>
+            <div class="card-body">
+                <div class="post-meta">
+                    {{ post.publish|date:"M d, Y" }} · {{ post.reading_time }} min read
+                </div>
+                <h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
+                {% if post.subtitle %}<p class="subtitle">{{ post.subtitle }}</p>{% endif %}
+                <p class="post-excerpt">{{ post.excerpt }}</p>
+            </div>
+        </article>
+        {% empty %}
+        <p style="text-align: center; color: #999; padding: 3rem 0;">No posts in this category yet.</p>
+        {% endfor %}
+
+        {% if is_paginated %}
+        <div class="pagination">
+            {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}">← Previous</a>
+            {% endif %}
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                <span class="current">{{ num }}</span>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <a href="?page={{ num }}">{{ num }}</a>
+                {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Next →</a>
+            {% endif %}
+        </div>
+        {% endif %}
     </div>
-    <h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
-    {% if post.subtitle %}<p class="subtitle">{{ post.subtitle }}</p>{% endif %}
-    <p class="post-excerpt">{{ post.excerpt }}</p>
-    <a href="{{ post.get_absolute_url }}" class="read-more">Read more →</a>
-</article>
-{% empty %}
-<p style="text-align: center; color: #999; padding: 3rem 0;">No posts in this category yet.</p>
-{% endfor %}
+
+    {% include "partials/sidebar.html" %}
+</div>
 {% endblock %}

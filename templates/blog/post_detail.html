@@ -19,6 +19,7 @@
 {% block title %}{{ post.title }} — The Routine Parent{% endblock %}
 
 {% block content %}
+<div class="narrow">
 <article class="post-detail">
     <div class="post-meta">
         {% if post.pillar %}
@@ -109,5 +110,6 @@
             <button type="submit" class="comment-submit">Post Comment</button>
         </form>
     </div>
+</div>
 </div>
 {% endblock %}
