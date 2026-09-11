@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}{{ pillar.name }} — The Routine Parent{% endblock %}
+{% block title %}{{ pillar.name }}{% if page_obj.number > 1 %} – Page {{ page_obj.number }}{% endif %} — The Routine Parent{% endblock %}
 
 {% block content %}
 <div class="page-header">

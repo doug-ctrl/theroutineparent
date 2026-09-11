@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}The Routine Parent — Productivity for Modern Parents{% endblock %}
+{% block title %}The Routine Parent{% if page_obj.number > 1 %} – Page {{ page_obj.number }}{% endif %} — Productivity for Modern Parents{% endblock %}
 
 {% block content %}
 <div class="page-header">
