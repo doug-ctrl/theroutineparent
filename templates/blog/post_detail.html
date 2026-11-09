@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load seo %}
 {% block og_tags %}
 <meta property="og:title" content="{{ post.title }}">
 <meta property="og:description" content="{{ post.meta_description|default:post.excerpt }}">
@@ -70,9 +71,9 @@
         <div class="post-meta">
             {{ related.publish|date:"M d, Y" }} · {{ related.reading_time }} min read
         </div>
-        <h2><a href="{{ related.get_absolute_url }}">{{ related.title }}</a></h2>
+        <h2><a href="{{ related|apex_url }}">{{ related.title }}</a></h2>
         <p class="post-excerpt">{{ related.excerpt }}</p>
-        <a href="{{ related.get_absolute_url }}" class="read-more">Read more →</a>
+        <a href="{{ related|apex_url }}" class="read-more">Read more →</a>
     </article>
     {% endfor %}
 </div>

@@ -5,6 +5,12 @@ from django.utils.encoding import escape_uri_path
 register = template.Library()
 
 
+@register.filter
+def apex_url(obj):
+    """Absolute apex URL for any object with get_absolute_url."""
+    return settings.SITE_URL + obj.get_absolute_url()
+
+
 @register.simple_tag(takes_context=True)
 def canonical_url(context):
     """Apex URL for the current path, plus ?page=N only for page 2 onwards.

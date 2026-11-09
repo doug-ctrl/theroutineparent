@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils import timezone
@@ -112,6 +113,22 @@ class Post(models.Model):
             clean_body = clean_body.replace('&nbsp;', ' ').strip()
             self.excerpt = clean_body[:497] + "..." if len(clean_body) > 500 else clean_body
         super().save(*args, **kwargs)
+
+    def next_in_pillar(self, count=3):
+        """The next `count` published posts in this pillar, going back in
+        time and wrapping round to the newest, so every post in a pillar
+        gets linked from others (not just the newest few)."""
+        if not self.pillar_id:
+            return []
+        siblings = Post.objects.filter(
+            status=Post.Status.PUBLISHED, pillar_id=self.pillar_id
+        ).exclude(pk=self.pk).order_by("-publish", "-pk")
+        posts = list(siblings.filter(
+            Q(publish__lt=self.publish) | Q(publish=self.publish, pk__lt=self.pk)
+        )[:count])
+        if len(posts) < count:
+            posts += siblings.exclude(pk__in=[p.pk for p in posts])[:count - len(posts)]
+        return posts
 
     @property
     def reading_time(self):

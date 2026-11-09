@@ -65,10 +65,7 @@ class PostDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context["comments"] = self.object.comments.filter(active=True)
         context["comment_form"] = CommentForm()
-        context["related_posts"] = Post.objects.filter(
-            status=Post.Status.PUBLISHED,
-            pillar=self.object.pillar
-        ).exclude(id=self.object.id).select_related("pillar", "author")[:3]
+        context["related_posts"] = self.object.next_in_pillar()
         return context
 
     def post(self, request, *args, **kwargs):
