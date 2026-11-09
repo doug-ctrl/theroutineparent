@@ -48,17 +48,37 @@ def related_links(html):
 # --- Post.next_in_pillar ---
 
 @pytest.mark.django_db
-def test_next_in_pillar_takes_next_older_posts():
-    a, b, c, d, e = make_pillar_posts(make_pillar(), 5)
-    assert a.next_in_pillar() == [b, c, d]
-    assert b.next_in_pillar() == [c, d, e]
+def test_next_two_older_posts_plus_pillar_newest():
+    a, b, c, d, e, f = make_pillar_posts(make_pillar(), 6)
+    assert b.next_in_pillar() == [c, d, a]
+    assert c.next_in_pillar() == [d, e, a]
 
 
 @pytest.mark.django_db
-def test_next_in_pillar_wraps_round_to_newest():
+def test_newest_post_gets_next_three_older():
     a, b, c, d, e = make_pillar_posts(make_pillar(), 5)
-    assert d.next_in_pillar() == [e, a, b]
-    assert e.next_in_pillar() == [a, b, c]
+    assert a.next_in_pillar() == [b, c, d]
+
+
+@pytest.mark.django_db
+def test_wraps_round_past_newest_without_repeating_it():
+    a, b, c, d, e = make_pillar_posts(make_pillar(), 5)
+    # D runs out after E; the wrap would hit A (already the third link), so B fills the slot
+    assert d.next_in_pillar() == [e, b, a]
+    assert e.next_in_pillar() == [b, c, a]
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("size", range(1, 9))
+def test_links_are_unique_exclude_self_and_include_newest(size):
+    posts = make_pillar_posts(make_pillar(), size)
+    newest = posts[0]
+    for post in posts:
+        related = post.next_in_pillar()
+        assert post not in related
+        assert len({p.pk for p in related}) == len(related) == min(3, size - 1)
+        if post != newest:
+            assert related[-1] == newest
 
 
 @pytest.mark.django_db
@@ -69,9 +89,15 @@ def test_every_post_in_pillar_gets_inbound_links():
 
 
 @pytest.mark.django_db
-def test_next_in_pillar_with_small_pillar_never_repeats_or_includes_self():
+def test_pillar_with_fewer_than_four_posts():
     a, b, c = make_pillar_posts(make_pillar(), 3)
-    assert c.next_in_pillar() == [a, b]
+    assert a.next_in_pillar() == [b, c]
+    assert b.next_in_pillar() == [c, a]
+    assert c.next_in_pillar() == [b, a]
+
+
+@pytest.mark.django_db
+def test_pillar_with_one_post_has_no_links():
     assert make_post("Solo", 0, pillar=make_pillar("Solo", "solo")).next_in_pillar() == []
 
 
@@ -109,8 +135,16 @@ def test_post_detail_shows_more_from_pillar_with_apex_links(client):
     html = client.get(e.get_absolute_url()).content.decode()
     assert "More from Real Life Systems" in html
     assert related_links(html) == [
-        (f"{APEX}{p.get_absolute_url()}", p.title) for p in (a, b, c)
+        (f"{APEX}{p.get_absolute_url()}", p.title) for p in (b, c, a)
     ]
+
+
+@pytest.mark.django_db
+def test_pillar_with_one_post_hides_more_from_block(client):
+    post = make_post("Solo", 0, pillar=make_pillar("Solo", "solo"))
+    html = client.get(post.get_absolute_url()).content.decode()
+    assert 'class="related-posts"' not in html
+    assert "More from Solo" not in html
 
 
 @pytest.mark.django_db

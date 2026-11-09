@@ -115,20 +115,31 @@ class Post(models.Model):
         super().save(*args, **kwargs)
 
     def next_in_pillar(self, count=3):
-        """The next `count` published posts in this pillar, going back in
-        time and wrapping round to the newest, so every post in a pillar
-        gets linked from others (not just the newest few)."""
+        """Up to `count` posts for the "More from <pillar>" block.
+
+        The next older published posts in this pillar (wrapping round to
+        the newest end), with the pillar's newest post always in the last
+        slot, so a new post is linked from every other post in its pillar.
+        If this post is the newest, it's just the next `count` older posts.
+        Always two queries.
+        """
         if not self.pillar_id:
             return []
         siblings = Post.objects.filter(
             status=Post.Status.PUBLISHED, pillar_id=self.pillar_id
         ).exclude(pk=self.pk).order_by("-publish", "-pk")
-        posts = list(siblings.filter(
+        older = list(siblings.filter(
             Q(publish__lt=self.publish) | Q(publish=self.publish, pk__lt=self.pk)
         )[:count])
-        if len(posts) < count:
-            posts += siblings.exclude(pk__in=[p.pk for p in posts])[:count - len(posts)]
-        return posts
+        newest_first = list(siblings[:count])
+        # Older posts first, then wrap round from the newest end
+        candidates = older + [p for p in newest_first if p not in older]
+        # The top sibling is only newer than this post if it isn't one of the older ones
+        newest = newest_first[0] if newest_first and newest_first[0] not in older else None
+        if newest is None:
+            return candidates[:count]
+        others = [p for p in candidates if p != newest][:count - 1]
+        return others + [newest]
 
     @property
     def reading_time(self):
