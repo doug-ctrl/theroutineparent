@@ -828,29 +828,6 @@
             margin-right: auto;
         }
 
-        /* Footer "Latest Posts": stacked list, same look as .sidebar-recent */
-        .footer-latest {
-            max-width: 520px;
-            margin: 0 auto 2rem;
-        }
-
-        .footer-latest ul { list-style: none; padding: 0; margin: 0; }
-
-        .footer-latest a {
-            display: block;
-            padding: 0.6rem 0;
-            color: #555;
-            text-decoration: none;
-            font-size: 0.9rem;
-            line-height: 1.4;
-            border-bottom: 1px solid #f0ebe3;
-            transition: color 0.3s, border-color 0.3s;
-        }
-
-        .footer-latest li:last-child a { border-bottom: none; }
-
-        .footer-latest a:hover { color: #7c956a; }
-
         /* =========================================
            DARK MODE STYLES
            ========================================= */
@@ -949,15 +926,6 @@
 
         body.dark-mode .sidebar-recent a {
             border-bottom-color: #2a2a4a;
-        }
-
-        body.dark-mode .footer-latest a {
-            color: #b0b0b0;
-            border-bottom-color: #2a2a4a;
-        }
-
-        body.dark-mode .footer-latest a:hover {
-            color: #a3b88c;
         }
 
         body.dark-mode .sidebar-newsletter h3 {
@@ -1319,16 +1287,6 @@
     </div>
 
     <footer>
-        {% if latest_posts %}
-        <nav class="footer-latest" aria-label="Latest posts">
-            <div class="section-label">Latest Posts</div>
-            <ul>
-                {% for latest in latest_posts %}
-                <li><a href="{{ latest|apex_url }}">{{ latest.title }}</a></li>
-                {% endfor %}
-            </ul>
-        </nav>
-        {% endif %}
         <p>&copy; 2026 The Routine Parent — Productivity for Modern Parents</p>
         <p><a href="#" onclick="reopenCookieBanner(); return false;" class="cookie-settings-link">Cookie settings</a></p>
     </footer>

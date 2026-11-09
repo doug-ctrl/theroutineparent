@@ -45,10 +45,6 @@ def related_links(html):
     return [(href, text) for href, text in links if text != "Read more →"]
 
 
-def footer_links(html):
-    return links_between(html, 'class="footer-latest"', "</nav>")
-
-
 # --- Post.next_in_pillar ---
 
 @pytest.mark.django_db
@@ -123,30 +119,7 @@ def test_post_without_pillar_has_no_more_from_block(client):
     assert 'class="related-posts"' not in client.get(post.get_absolute_url()).content.decode()
 
 
-# --- "Latest Posts" footer ---
-
-@pytest.mark.django_db
-@pytest.mark.parametrize("path", ["/", "/about/", "/contact/", "/free-planner/", "/search/?q=x"])
-def test_footer_lists_five_newest_posts_on_every_page(client, path):
-    posts = [make_post(f"Post {i}", days_ago=i) for i in range(7)]
-    make_post("Unpublished", 0, status=Post.Status.DRAFT)
-    html = client.get(path).content.decode()
-    assert footer_links(html) == [
-        (f"{APEX}{p.get_absolute_url()}", p.title) for p in posts[:5]
-    ]
-
-
-@pytest.mark.django_db
-def test_footer_on_post_detail_page(client):
-    posts = [make_post(f"Post {i}", days_ago=i) for i in range(6)]
-    html = client.get(posts[5].get_absolute_url()).content.decode()
-    assert [t for _, t in footer_links(html)] == [p.title for p in posts[:5]]
-
-
-@pytest.mark.django_db
-def test_no_footer_block_when_no_posts(client):
-    assert 'class="footer-latest"' not in client.get("/about/").content.decode()
-
+# --- sidebar "Recent Posts" ---
 
 @pytest.mark.django_db
 def test_sidebar_still_shows_four_recent_posts(client):
@@ -176,9 +149,9 @@ def test_post_detail_query_count_is_constant(client):
 
 
 @pytest.mark.django_db
-def test_footer_query_count_is_constant(client):
-    make_post("Only post", 0)
-    one_post = count_queries(client, "/about/")
-    for i in range(10):
-        make_post(f"Post {i}", days_ago=i + 1)
-    assert count_queries(client, "/about/") == one_post
+def test_pages_without_sidebar_do_not_query_posts(client):
+    for i in range(5):
+        make_post(f"Post {i}", days_ago=i)
+    with CaptureQueriesContext(connection) as ctx:
+        assert client.get("/about/").status_code == 200
+    assert not any('"blog_post"' in q["sql"] for q in ctx.captured_queries)

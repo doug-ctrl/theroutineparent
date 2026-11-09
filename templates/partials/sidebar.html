@@ -11,11 +11,11 @@
         </div>
     </div>
 
-    {% if latest_posts %}
+    {% if sidebar_recent_posts %}
     <div class="sidebar-box">
         <div class="section-label">Recent Posts</div>
         <div class="sidebar-recent">
-            {% for post in latest_posts|slice:":4" %}
+            {% for post in sidebar_recent_posts %}
             <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
             {% endfor %}
         </div>
