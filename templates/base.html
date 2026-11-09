@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{% load static %}
+{% load static seo %}
 <html lang="en">
 <head>
     <link rel="alternate" type="application/rss+xml" title="The Routine Parent" href="/feed/">
@@ -17,7 +17,7 @@
     <meta name="description" content="{% block meta_description %}Simple family routines,
     parent productivity & raising independent kids. Free planners + printables.
     New posts weekly 🌿 theroutineparent.com{% endblock %}">
-    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+    <link rel="canonical" href="{% canonical_url %}">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-TFQPTC1VVE"></script>
     <script>
     window.dataLayer = window.dataLayer || [];

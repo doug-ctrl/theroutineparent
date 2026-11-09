@@ -166,6 +166,8 @@ if not DEBUG:
 # Site info
 SITE_NAME = "The Routine Parent"
 SITE_TAGLINE = "Productivity for Modern Parents"
+# Used for canonical URLs, so they never depend on the Host header (www, Railway domain, etc.)
+SITE_URL = "https://theroutineparent.com"
 
 # Resend (transactional email)
 RESEND_API_KEY = os.getenv("RESEND_API_KEY")

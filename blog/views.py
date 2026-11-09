@@ -6,7 +6,8 @@ from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from .models import Post, Pillar, Comment, NewsletterSubscriber, ContactMessage
 from .forms import CommentForm, ContactForm
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponsePermanentRedirect
+from django.utils.encoding import escape_uri_path
 import requests
 from django.core.mail import send_mail
 from django.conf import settings
@@ -14,7 +15,21 @@ import resend
 resend.api_key = settings.RESEND_API_KEY
 
 
-class PostListView(ListView):
+class PageOneRedirectMixin:
+    """301 ?page=1 to the bare URL so page 1 only has one address."""
+
+    def get(self, request, *args, **kwargs):
+        if request.GET.get(self.page_kwarg) == "1":
+            params = request.GET.copy()
+            params.pop(self.page_kwarg)
+            url = escape_uri_path(request.path)
+            if params:
+                url += "?" + params.urlencode()
+            return HttpResponsePermanentRedirect(url)
+        return super().get(request, *args, **kwargs)
+
+
+class PostListView(PageOneRedirectMixin, ListView):
     model = Post
     template_name = "blog/post_list.html"
     context_object_name = "posts"
@@ -73,7 +88,7 @@ class PostDetailView(DetailView):
         return self.render_to_response(context)
 
 
-class PillarPostsView(ListView):
+class PillarPostsView(PageOneRedirectMixin, ListView):
     model = Post
     template_name = "blog/pillar_posts.html"
     context_object_name = "posts"
@@ -91,7 +106,7 @@ class PillarPostsView(ListView):
         return context
 
 
-class SearchView(ListView):
+class SearchView(PageOneRedirectMixin, ListView):
     model = Post
     template_name = "blog/search_results.html"
     context_object_name = "posts"
